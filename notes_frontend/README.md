@@ -1,82 +1,73 @@
-# Lightweight React Template for KAVIA
+# Notes Frontend (React)
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+A modern, minimalistic web UI for creating, editing, and organizing personal notes. Built with React, React Router, and vanilla CSS.
 
 ## Features
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+- User authentication (sign up, sign in, sign out)
+- Create, edit, delete, and view notes
+- Organize by tags and categories
+- Search notes
+- Responsive, minimal UI using brand colors
+  - primary: `#1976d2`
+  - secondary: `#90caf9`
+  - accent: `#ffb300`
+- Environment-based API configuration
 
-## Getting Started
+## Quick Start
 
-In the project directory, you can run:
+1) Install dependencies:
+   npm install
 
-### `npm start`
+2) Configure environment:
+   - Copy .env.example to .env
+   - Set REACT_APP_API_BASE_URL to your backend URL (e.g., http://localhost:8000)
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3) Run the development server:
+   npm start
 
-### `npm test`
+4) Run tests:
+   npm test
 
-Launches the test runner in interactive watch mode.
+## Environment Variables
 
-### `npm run build`
+Create a .env file in this directory using .env.example as reference:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- REACT_APP_API_BASE_URL: Base URL of the backend API
+- REACT_APP_SITE_URL: Public site URL (optional)
 
-## Customization
+## API Assumptions
 
-### Colors
+The frontend expects the following REST endpoints (adjust as needed):
+- POST /auth/login -> { token, user }
+- POST /auth/signup -> { token, user }
+- GET /auth/me -> user
+- GET /notes?search=&tags=a,b&category= -> [note]
+- GET /notes/:id -> note
+- POST /notes -> note
+- PUT /notes/:id -> note
+- DELETE /notes/:id -> { success: true }
+- GET /tags -> [string]
+- GET /categories -> [string]
 
-The main brand colors are defined as CSS variables in `src/App.css`:
+Update src/services/api.js if your API differs.
 
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
+## Project Structure
 
-### Components
+- src/services/api.js: API client using fetch
+- src/context/AuthContext.js: Authentication state and actions
+- src/pages: LoginPage, SignupPage, NotesPage, NotFound
+- src/components: Header, Sidebar, NoteCard, NoteEditorModal
+- src/routes/PrivateRoute.jsx: Route guard for authenticated pages
+- src/App.js: Routes setup and theme toggle
+- src/App.css: Global styles and layout
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
+## Styling
 
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
+Colors and theme variables are defined in src/App.css. Dark mode toggle is available in the top-right corner.
 
-## Learn More
+## Notes
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- This app uses localStorage to persist auth token and user data
+- All API calls include the Authorization: Bearer <token> header when signed in
+- Minimal dependencies to keep the bundle small and fast

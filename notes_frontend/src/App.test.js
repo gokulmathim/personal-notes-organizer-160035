@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+// Simple smoke test: should render auth screen prompt when not authenticated
+test("renders sign in prompt", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const el = screen.getByText(/sign in to your account/i);
+  expect(el).toBeInTheDocument();
 });
