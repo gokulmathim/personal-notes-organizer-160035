@@ -1,1 +1,3 @@
-# personal-notes-organizer-160035
+# Project Repository
+
+This is the initial README file for the project.
